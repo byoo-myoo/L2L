@@ -72,22 +72,20 @@ const TopPage = () => {
                 <p className="eyebrow">共有してね</p>
                 <h3>すぐ誘えるシェアカード</h3>
                 <p className="hint">リンクをコピー or QRを表示。ネイティブ共有にも対応しています。</p>
-                <div className="cta-row stacked">
-                    <div className="cta-row">
-                        <div className="btn-wrapper">
-                            <button className="btn small" onClick={handleCopy}>🔗 リンクをコピー</button>
-                            {copyStatus === 'copied' && <span className="copy-feedback" style={{ marginLeft: 8 }}>コピーしました</span>}
-                        </div>
-                        <div className="btn-wrapper">
-                            <button className="btn small" onClick={() => setShowQR(true)}>📱 QRコード</button>
-                        </div>
-                    </div>
-                    <div className="cta-row">
-                        <button className="btn small ghost" onClick={() => shareLink(shareTarget, 'Love Diagnosis')}>
-                            シェアする
-                        </button>
-                    </div>
+            <div className="cta-row">
+                <div className="btn-wrapper">
+                    <button className="btn small" onClick={handleCopy}>🔗 リンクをコピー</button>
+                    {copyStatus === 'copied' && <span className="copy-feedback" style={{ marginLeft: 8 }}>コピーしました</span>}
                 </div>
+                <div className="btn-wrapper">
+                    <button className="btn small" onClick={() => setShowQR(true)}>📱 QRコード</button>
+                </div>
+                <div className="btn-wrapper">
+                    <button className="btn small" onClick={() => shareLink(shareTarget, 'Love Diagnosis')}>
+                        📤 シェアする
+                    </button>
+                </div>
+            </div>
             </section>
 
             <section className="card">
