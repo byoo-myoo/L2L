@@ -11,6 +11,7 @@ interface Props {
     value: number | null;
     onSelect: (v: number) => void;
     hasQuestion: boolean;
+    creationHint?: string;
 }
 
 const BonusQuestionEditor: React.FC<Props> = ({
@@ -23,6 +24,7 @@ const BonusQuestionEditor: React.FC<Props> = ({
     value,
     onSelect,
     hasQuestion,
+    creationHint,
 }) => (
     <section className="card">
         <p className="eyebrow">追加質問（任意）</p>
@@ -74,6 +76,7 @@ const BonusQuestionEditor: React.FC<Props> = ({
         ) : (
             <p className="hint">追加質問が設定されていません</p>
         )}
+        {creationHint ? <p className="hint">{creationHint}</p> : null}
     </section>
 );
 

@@ -270,6 +270,7 @@ const QuizForm: React.FC<QuizFormProps> = ({
                                 value={bonusAnswer}
                                 onSelect={setBonusAnswer}
                                 hasQuestion={hasBonusText}
+                                creationHint="※あなたも答えてね"
                             />
                         </div>
                     )}
