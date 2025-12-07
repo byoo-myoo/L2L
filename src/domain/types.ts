@@ -112,6 +112,7 @@ export interface SoloVariantProfile {
     label: string;
     description: string;
     avatar: string;
+    emoji?: string;
 }
 
 export type DuoVariant =
@@ -129,6 +130,7 @@ export interface DuoVariantProfile {
     title: string;
     message: string;
     tips: string[];
+    emoji?: string;
 }
 
 export interface PairView {

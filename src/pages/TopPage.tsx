@@ -11,6 +11,23 @@ const TopPage = () => {
     const [copyStatus, setCopyStatus] = useState<'idle' | 'copied'>('idle');
     const shareTarget = `${window.location.origin}${window.location.pathname}`;
 
+    const baseColorMap: Record<'1' | '2' | '3' | '4', string> = {
+        '1': '#2fba62', // harmony / green
+        '2': '#2fbad3', // calm / aqua
+        '3': '#ffb347', // lead / amber
+        '4': '#ff4940', // passion / red
+    };
+    const duoColorMap: Record<string, string> = {
+        'sync-strong': '#2fba62',
+        'sync-soft': '#2fbad3',
+        'complement-active': '#ffb347',
+        'complement-gentle': '#ffb347',
+        'contrast-explore': '#ff4940',
+        'contrast-guard': '#ff4940',
+        'drift-stable': '#9b8cf8',
+        'drift-bridge': '#9b8cf8',
+    };
+
     const handleCopy = () => {
         copyToClipboard(shareTarget).then((ok) => {
             if (ok) {
@@ -77,8 +94,17 @@ const TopPage = () => {
                 <p className="eyebrow">ソロタイプ一覧（16）</p>
                 <div className="grid two">
                     {SOLO_VARIANT_LIST.map((v) => (
-                        <div key={v.id} className="mini-card">
-                            <h4>{v.label}</h4>
+                        <div
+                            key={v.id}
+                            className="mini-card"
+                            style={{
+                                border: `1px solid ${baseColorMap[v.id[0] as '1' | '2' | '3' | '4'] ?? '#d1d5db'}`,
+                                borderRadius: 12,
+                            }}
+                        >
+                            <h4>
+                                {v.emoji ? `${v.emoji} ` : ''}{v.label}
+                            </h4>
                             <p className="eyebrow" style={{ marginTop: '0.25rem' }}>{v.avatar}</p>
                             <p className="small">{v.description}</p>
                         </div>
@@ -90,8 +116,17 @@ const TopPage = () => {
                 <p className="eyebrow">デュオタイプ一覧（8）</p>
                 <div className="grid two">
                     {DUO_VARIANT_LIST.map((v) => (
-                        <div key={v.id} className="mini-card">
-                            <h4>{v.title}</h4>
+                        <div
+                            key={v.id}
+                            className="mini-card"
+                            style={{
+                                border: `1px solid ${duoColorMap[v.id] ?? '#d1d5db'}`,
+                                borderRadius: 12,
+                            }}
+                        >
+                            <h4>
+                                {v.emoji ? `${v.emoji} ` : ''}{v.title}
+                            </h4>
                             <p className="small">{v.message}</p>
                             <ul className="small">
                                 {v.tips.slice(0, 2).map((t) => (

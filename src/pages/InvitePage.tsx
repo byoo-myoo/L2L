@@ -338,6 +338,7 @@ const InvitePage = () => {
                     <p className="eyebrow">あなたのソロ結果</p>
                     <h2>SOLO STYLE: {soloResult.variantProfile?.avatar ?? soloResult.type.avatar}</h2>
                     <p className="eyebrow" style={{ marginTop: '0.25rem' }}>
+                        {soloResult.variantProfile?.emoji ? `${soloResult.variantProfile.emoji} ` : ''}
                         {soloResult.variantProfile?.label ?? soloResult.type.name}
                     </p>
                     <p>{soloResult.variantProfile?.description ?? soloResult.type.headline}</p>

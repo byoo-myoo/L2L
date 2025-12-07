@@ -54,7 +54,11 @@ const ResultPage = () => {
 
     const duoProfile = payload.duoVariant ? getDuoVariantProfile(payload.duoVariant) : null;
     const view = duoProfile
-        ? { title: duoProfile.title, message: duoProfile.message, tips: duoProfile.tips }
+        ? {
+            title: duoProfile.emoji ? `${duoProfile.emoji} ${duoProfile.title}` : duoProfile.title,
+            message: duoProfile.message,
+            tips: duoProfile.tips,
+        }
         : buildPairViewFromResult(payload.resultId, payload.view);
     const profiles = getPersonalProfilesFromResult(payload.resultId, payload.view);
     const selfVariantProfile = payload.soloVariantSelf ? getSoloVariantProfile(payload.soloVariantSelf) : undefined;
@@ -159,6 +163,7 @@ const ResultPage = () => {
                 <p className="eyebrow">あなたの個人結果</p>
                 <h1>SOLO STYLE: {payload.soloAvatarSelf ?? selfVariantProfile?.avatar ?? profiles.self.avatar}</h1>
                 <p className="eyebrow" style={{ marginTop: '0.25rem' }}>
+                    {selfVariantProfile?.emoji ? `${selfVariantProfile.emoji} ` : ''}
                     {selfVariantProfile?.label ?? profiles.self.name}
                 </p>
                 <p>{selfVariantProfile?.description ?? profiles.self.headline}</p>
