@@ -42,7 +42,6 @@ const QuizForm: React.FC<QuizFormProps> = ({
     const baseQuestions = useMemo(() => shuffleBaseQuestions(), []);
 
     const hasBonusText = bonusQuestionText.trim().length > 0;
-    const guestHasBonus = role === 'guest' && hasBonusText;
     const bonusAriaLabel = bonusLabelText.trim() || bonusQuestionText;
 
     // Scroll to top when moving into the followup (追加質問作成) step
@@ -68,7 +67,6 @@ const QuizForm: React.FC<QuizFormProps> = ({
 
     const followupsAnsweredAll = followupsReady && followups.every((q) => answers[q.id] !== undefined);
 
-    const canProceed = step === 'base' && baseAnsweredAll;
     const canSubmit =
         step === 'followup' &&
         baseAnsweredAll &&
