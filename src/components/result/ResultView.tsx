@@ -34,7 +34,6 @@ const ResultView: React.FC<ResultViewProps> = ({
 
     const answeredIds = Array.from(
         new Set([
-            ...Object.keys(answersBlock?.self ?? {}).map(Number),
             ...Object.keys(answersBlock?.partner ?? {}).map(Number),
         ]),
     ).sort((a, b) => a - b);
@@ -43,22 +42,27 @@ const ResultView: React.FC<ResultViewProps> = ({
         const q = QUESTION_MAP.get(id);
         if (!q) return;
 
+        const partner = answersBlock?.partner?.[q.id];
+        if (partner === undefined) return; // Only show what partner answered
+
         const showBonusHere = bonusDetail && currentView !== "A" && idx === insertAt;
         if (showBonusHere) {
             const myBonus = bonusDetail.partnerAnswer;
             const partnerBonus = bonusDetail.ownerAnswer;
-            questionChoices.push({
-                id: "bonus",
-                label: `Q${displayIndex}`,
-                text: bonusDetail.question,
-                my: myBonus,
-                partner: partnerBonus,
-            });
-            displayIndex += 1;
+            // For bonus, only show if partner answered
+            if (partnerBonus !== undefined && partnerBonus !== null) {
+                questionChoices.push({
+                    id: "bonus",
+                    label: `Q${displayIndex}`,
+                    text: bonusDetail.question,
+                    my: myBonus,
+                    partner: partnerBonus,
+                });
+                displayIndex += 1;
+            }
         }
 
         const my = answersBlock?.self?.[q.id];
-        const partner = answersBlock?.partner?.[q.id];
         questionChoices.push({
             id: `q-${q.id}`,
             label: `Q${displayIndex}`,
@@ -72,14 +76,16 @@ const ResultView: React.FC<ResultViewProps> = ({
     if (bonusDetail && currentView !== "A" && answeredIds.length <= insertAt) {
         const myBonus = bonusDetail.partnerAnswer;
         const partnerBonus = bonusDetail.ownerAnswer;
-        questionChoices.push({
-            id: "bonus",
-            label: `Q${displayIndex}`,
-            text: bonusDetail.question,
-            my: myBonus,
-            partner: partnerBonus,
-        });
-        displayIndex += 1;
+        if (partnerBonus !== undefined && partnerBonus !== null) {
+            questionChoices.push({
+                id: "bonus",
+                label: `Q${displayIndex}`,
+                text: bonusDetail.question,
+                my: myBonus,
+                partner: partnerBonus,
+            });
+            displayIndex += 1;
+        }
     }
 
     return (
