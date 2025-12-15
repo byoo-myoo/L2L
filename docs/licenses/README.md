@@ -1,6 +1,6 @@
 # License Automation (MIT project)
 
-This repo separates the project license (MIT) from third-party notices and publishes everything under `docs/licenses/` for GitHub Pages.
+This repo separates the project license (MIT) from third-party notices and publishes everything under `docs/licenses/` for GitHub Pages. License automation scripts live in `_script/` and are wrapped by npm scripts.
 
 ## Directories
 - `docs/licenses/texts/*.txt`: SPDX license texts (one file per license id)

@@ -1,3 +1,10 @@
+// docs/licenses/index.md を自動生成するスクリプト。
+// 役割:
+//   - LICENSE の本文を折りたたみで表示
+//   - THIRD-PARTY-LICENSES.md を docs/ 配下にコピー
+//   - texts/ と notices/ をディレクトリ走査して <details> で列挙
+//   - licenses.json を読んでライセンス別の件数表を挿入
+//   - レポートを reports/license-page.md に残し、必要なら Step Summary に追記
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
@@ -33,6 +40,7 @@ const splitFallbackIds = (expression) =>
         .map((part) => part.trim())
         .filter(Boolean);
 
+// SPDX 式を解釈し、失敗時は簡易分解
 const extractIds = (expression) => {
     const trimmed = expression.trim();
     try {
@@ -48,6 +56,7 @@ const extractIds = (expression) => {
     }
 };
 
+// licenses.json を集計してライセンス毎の件数を返す
 const readLicenseCounts = async () => {
     if (!fs.existsSync(LICENSES_JSON_PATH)) return { total: 0, counts: new Map() };
     const json = JSON.parse(await fsp.readFile(LICENSES_JSON_PATH, "utf8"));
@@ -64,6 +73,7 @@ const readLicenseCounts = async () => {
     return { total, counts };
 };
 
+// Markdown の <details> をお手軽生成
 const renderDetails = (title, bodyLines) => [
     "<details>",
     `<summary>${title}</summary>`,
@@ -74,6 +84,7 @@ const renderDetails = (title, bodyLines) => [
 ];
 
 const main = async () => {
+    // 必要ディレクトリを用意
     await Promise.all([
         ensureDir(DOCS_ROOT),
         ensureDir(TEXTS_DIR),
@@ -81,14 +92,17 @@ const main = async () => {
         ensureDir(REPORTS_DIR),
     ]);
 
+    // THIRD-PARTY-LICENSES.md を docs 配下にコピー（Pages で閲覧できるようにする）
     if (fs.existsSync(THIRD_PARTY_SRC)) {
         await fsp.copyFile(THIRD_PARTY_SRC, THIRD_PARTY_DEST);
     }
 
+    // プロジェクトの LICENSE 本文
     const projectLicense = fs.existsSync(path.join(ROOT, "LICENSE"))
         ? await fsp.readFile(path.join(ROOT, "LICENSE"), "utf8")
         : "";
 
+    // 依存ライセンス件数の集計
     const { total: dependencyCount, counts: licenseCounts } = await readLicenseCounts();
 
     const lines = [];

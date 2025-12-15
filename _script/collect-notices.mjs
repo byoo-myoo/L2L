@@ -1,3 +1,6 @@
+// Apache-2.0 依存の NOTICE を docs/licenses/notices に集めるスクリプト。
+// license-checker の出力 (licenses.json) を元に、各パッケージ配下の NOTICE* をコピーする。
+// 1 回のコピー結果と不足一覧を reports/notice-collection.md に残す。
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
@@ -30,6 +33,7 @@ const splitFallbackIds = (expression) =>
         .map((part) => part.trim())
         .filter(Boolean);
 
+// SPDX 式を厳密パースし、失敗したら簡易分解
 const extractIds = (expression) => {
     const trimmed = expression.trim();
     try {
@@ -45,6 +49,7 @@ const extractIds = (expression) => {
     }
 };
 
+// package 配下で NOTICE* を探す
 const findNoticeFile = async (info) => {
     if (info.noticeFile && fs.existsSync(info.noticeFile)) {
         return info.noticeFile;
@@ -69,6 +74,7 @@ const main = async () => {
     await ensureDir(NOTICES_DIR);
     await ensureDir(REPORTS_DIR);
 
+    // licenses.json を読み、プロジェクト自身を除外
     const raw = await fsp.readFile(LICENSES_JSON_PATH, "utf8");
     const data = JSON.parse(raw);
     const pkg = JSON.parse(await fsp.readFile(PACKAGE_JSON_PATH, "utf8"));
