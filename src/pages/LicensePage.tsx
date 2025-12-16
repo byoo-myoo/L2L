@@ -25,31 +25,34 @@ const REPO_URL = 'https://github.com/byoo-myoo/L2L';
 
 type FileEntry = { id: string; fileName: string; content: string };
 
-const normalizeEntries = (
+const entriesFromModules = (
   modules: Record<string, string>,
-  options?: { keepExtension?: boolean },
+  { stripExtension = true }: { stripExtension?: boolean } = {},
 ): FileEntry[] =>
   Object.entries(modules)
     .map(([key, content]) => {
       const fileName = key.split('/').pop() ?? key;
-      const id = options?.keepExtension ? fileName : fileName.replace(/\.[^.]+$/i, '');
+      const id = stripExtension ? fileName.replace(/\.[^.]+$/i, '') : fileName;
       return { id, fileName, content };
     })
     .sort((a, b) => a.id.localeCompare(b.id));
 
-const pickDoc = (entries: FileEntry[], target: string) =>
-  entries.find((entry) => entry.fileName.toLowerCase() === target.toLowerCase());
+const buildDocLookup = (entries: FileEntry[]) =>
+  entries.reduce<Record<string, FileEntry>>((acc, entry) => {
+    acc[entry.fileName.toLowerCase()] = entry;
+    return acc;
+  }, {});
 
 const LicensePage = () => {
-  const licenseTexts = useMemo(() => normalizeEntries(licenseTextModules), []);
-  const noticeFiles = useMemo(() => normalizeEntries(noticeModules, { keepExtension: true }), []);
-  const docFiles = useMemo(() => normalizeEntries(licenseDocModules, { keepExtension: true }), []);
+  const { licenseTexts, noticeFiles, docsByName } = useMemo(() => {
+    const licenseTexts = entriesFromModules(licenseTextModules);
+    const noticeFiles = entriesFromModules(noticeModules, { stripExtension: false });
+    const docEntries = entriesFromModules(licenseDocModules, { stripExtension: false });
+    return { licenseTexts, noticeFiles, docsByName: buildDocLookup(docEntries) };
+  }, []);
 
-  const thirdPartyDoc = useMemo(
-    () => pickDoc(docFiles, 'THIRD-PARTY-LICENSES.md'),
-    [docFiles],
-  );
-  const attributionDoc = useMemo(() => pickDoc(docFiles, 'ATTRIBUTION.md'), [docFiles]);
+  const thirdPartyDoc = docsByName['third-party-licenses.md'];
+  const attributionDoc = docsByName['attribution.md'];
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
