@@ -14,10 +14,8 @@ const TEXTS_DIR = path.join(DOCS_ROOT, "texts");
 const NOTICES_DIR = path.join(DOCS_ROOT, "notices");
 const ATTRIBUTION_PATH = path.join(DOCS_ROOT, "ATTRIBUTION.md");
 const LICENSE_PAGE_PATH = path.join(DOCS_ROOT, "index.md");
-const THIRD_PARTY_SRC = path.join(ROOT, "THIRD-PARTY-LICENSES.md");
-const THIRD_PARTY_DEST = path.join(DOCS_ROOT, "THIRD-PARTY-LICENSES.md");
-const THIRD_PARTY_NOTICES_SRC = path.join(ROOT, "THIRD-PARTY-NOTICES.md");
-const THIRD_PARTY_NOTICES_DEST = path.join(DOCS_ROOT, "THIRD-PARTY-NOTICES.md");
+const THIRD_PARTY_LICENSES_PATH = path.join(DOCS_ROOT, "THIRD-PARTY-LICENSES.md");
+const THIRD_PARTY_NOTICES_PATH = path.join(DOCS_ROOT, "THIRD-PARTY-NOTICES.md");
 const LICENSES_JSON_PATH = path.join(ROOT, "licenses.json");
 const REPORTS_DIR = path.join(ROOT, "reports");
 
@@ -86,13 +84,6 @@ const main = async () => {
         ensureDir(REPORTS_DIR),
     ]);
 
-    if (fs.existsSync(THIRD_PARTY_SRC)) {
-        await fsp.copyFile(THIRD_PARTY_SRC, THIRD_PARTY_DEST);
-    }
-    if (fs.existsSync(THIRD_PARTY_NOTICES_SRC)) {
-        await fsp.copyFile(THIRD_PARTY_NOTICES_SRC, THIRD_PARTY_NOTICES_DEST);
-    }
-
     const projectLicense = fs.existsSync(path.join(ROOT, "LICENSE"))
         ? await fsp.readFile(path.join(ROOT, "LICENSE"), "utf8")
         : "";
@@ -121,14 +112,14 @@ const main = async () => {
 
     lines.push("## Third-Party Summary");
     lines.push(`- Dependencies scanned: ${dependencyCount}`);
-    if (fs.existsSync(THIRD_PARTY_DEST)) {
+    if (fs.existsSync(THIRD_PARTY_LICENSES_PATH)) {
         lines.push(`- Third-party list: [THIRD-PARTY-LICENSES.md](./THIRD-PARTY-LICENSES.md)`);
     } else {
         lines.push(
             "- Third-party list: (missing) run `npm run licenses:scan` to generate THIRD-PARTY-LICENSES.md"
         );
     }
-    if (fs.existsSync(THIRD_PARTY_NOTICES_DEST)) {
+    if (fs.existsSync(THIRD_PARTY_NOTICES_PATH)) {
         lines.push(`- Notices: [THIRD-PARTY-NOTICES.md](./THIRD-PARTY-NOTICES.md)`);
     } else {
         lines.push(

@@ -9,8 +9,7 @@ import path from "node:path";
 const ROOT = process.cwd();
 const LICENSES_JSON_PATH = path.join(ROOT, "licenses.json");
 const NOTICES_DIR = path.join(ROOT, "docs", "licenses", "notices");
-const THIRD_PARTY_SRC = path.join(ROOT, "THIRD-PARTY-NOTICES.md");
-const THIRD_PARTY_DEST = path.join(ROOT, "docs", "licenses", "THIRD-PARTY-NOTICES.md");
+const THIRD_PARTY_NOTICES_PATH = path.join(ROOT, "docs", "licenses", "THIRD-PARTY-NOTICES.md");
 const REPORTS_DIR = path.join(ROOT, "reports");
 
 const NOTICE_CANDIDATES = [
@@ -136,9 +135,8 @@ const main = async () => {
         noticeDocLines.push("");
     });
 
-    await fsp.writeFile(THIRD_PARTY_SRC, noticeDocLines.join("\n"));
-    await ensureDir(path.dirname(THIRD_PARTY_DEST));
-    await fsp.writeFile(THIRD_PARTY_DEST, noticeDocLines.join("\n"));
+    await ensureDir(path.dirname(THIRD_PARTY_NOTICES_PATH));
+    await fsp.writeFile(THIRD_PARTY_NOTICES_PATH, noticeDocLines.join("\n"));
 };
 
 main().catch((err) => {

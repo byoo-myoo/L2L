@@ -8,8 +8,7 @@ const execFileAsync = promisify(execFile);
 
 const ROOT = process.cwd();
 const DOCS_DIR = path.join(ROOT, "docs", "licenses");
-const THIRD_PARTY_SRC = path.join(ROOT, "THIRD-PARTY-LICENSES.md");
-const THIRD_PARTY_DEST = path.join(DOCS_DIR, "THIRD-PARTY-LICENSES.md");
+const THIRD_PARTY_PATH = path.join(DOCS_DIR, "THIRD-PARTY-LICENSES.md");
 const LICENSES_JSON_PATH = path.join(ROOT, "licenses.json");
 const CUSTOM_FORMAT_PATH = path.join(ROOT, "_script", "license-checker-format.json");
 
@@ -73,10 +72,7 @@ const buildOutputs = async (projectId) => {
         projectId,
     ];
 
-    const [jsonOutput, mdOutput] = await Promise.all([
-        runLicenseChecker(jsonArgs),
-    ]);
-
+    const jsonOutput = await runLicenseChecker(jsonArgs);
     const jsonData = sortJsonByKey(JSON.parse(jsonOutput));
     delete jsonData[projectId];
 
@@ -124,13 +120,10 @@ const main = async () => {
     const { jsonData, markdown } = await buildOutputs(projectId);
 
     await fsp.writeFile(LICENSES_JSON_PATH, JSON.stringify(jsonData, null, 2));
-    await Promise.all([
-        fsp.writeFile(THIRD_PARTY_SRC, markdown),
-        fsp.writeFile(THIRD_PARTY_DEST, markdown),
-    ]);
+    await fsp.writeFile(THIRD_PARTY_PATH, markdown);
 
     console.log(
-        `[OK] licenses.json と THIRD-PARTY-LICENSES.md を出力しました (excluded ${projectId})`
+        `[OK] licenses.json と docs/licenses/THIRD-PARTY-LICENSES.md を出力しました (excluded ${projectId})`
     );
 };
 
