@@ -633,13 +633,6 @@
   transform: translateY(-1px);
 }
 
-.license-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 8px;
-}
-
 .license-text {
   margin-top: 10px;
   padding: 14px;
@@ -654,36 +647,6 @@
   word-break: break-word;
 }
 
-.license-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.license-block {
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 12px;
-  padding: 12px;
-  background: #f8fbff;
-}
-
-.license-block-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 10px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #0f1c2e;
-}
-
-.license-file {
-  font-size: 12px;
-  font-weight: 400;
-  color: #5a6778;
-}
-
 .license-box {
   margin-top: 12px;
   padding: 12px;
@@ -691,9 +654,8 @@
   border: 1px solid rgba(0, 0, 0, 0.06);
   background: #f8fbff;
   display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .license-loading {
@@ -704,8 +666,10 @@
   background: #fff1f2;
   border-color: rgba(239, 68, 68, 0.3);
   color: #991b1b;
-  flex-direction: column;
-  align-items: flex-start;
+}
+
+.code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 @media (max-width: 640px) {
