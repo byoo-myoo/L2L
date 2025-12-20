@@ -65,10 +65,7 @@ npm run dev
 ## 🧪 テスト / 品質
 - 単体・UI テスト: `npm run test`
 - Lint: `npm run lint`
-- 依存ライセンス更新:
-  1. `npx license-checker --json > licenses.json`
-  2. `node _script/check-licenses.mjs`
-  3. `npx license-checker --production --relativeLicensePath --markdown > THIRD-PARTY-LICENSES.md`
+- ライセンス関連の自動チェックは一時停止中です
 
 ---
 

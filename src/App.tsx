@@ -4,7 +4,6 @@ import TopPage from './pages/TopPage';
 import QuizPage from './pages/QuizPage';
 import InvitePage from './pages/InvitePage';
 import ResultPage from './pages/ResultPage';
-import LicensePage from './pages/LicensePage';
 import { AppStatusProvider } from './context/AppStatusContext';
 import StatusBanner from './components/StatusBanner';
 
@@ -27,8 +26,6 @@ export function AppContent() {
           <Route path="/quiz" element={<QuizPage />} />
           <Route path="/invite" element={<InvitePage />} />
           <Route path="/result" element={<ResultPage />} />
-          <Route path="/license" element={<LicensePage />} />
-          <Route path="/licenses" element={<LicensePage />} />
         </Routes>
       </main>
 
@@ -41,9 +38,6 @@ export function AppContent() {
           </div>
         </div>
         <div className="footer-links">
-          <Link className="footer-link" to="/licenses">
-            Third-party licenses
-          </Link>
           <a
             className="footer-link"
             href="https://github.com/byoo-myoo/L2L"

@@ -13,7 +13,7 @@ React / TypeScript / Vite で作った 2 人用の相性診断 SPA。10 問 + �
 - `owner` / `guest` の二段階フロー。回答後に招待 URL を LZ-string で圧縮し、QR 生成・コピー・Web Share API に対応
 - PeerJS で P2P データ転送。双方が同じ `sid` で接続できたときだけペア結果を算出するサーバーレス構成
 - HashRouter + `base: './'` で GitHub Pages 配信に対応
-- Vitest + Testing Library / ESLint を導入。`licenses.json` と `THIRD-PARTY-LICENSES.md` は CI で自動生成
+- Vitest + Testing Library / ESLint を導入
 
 ## Data & Privacy
 - 本アプリは回答をサーバーに保存しません。回答は圧縮されて共有 URL に含まれ、招待を受け取った相手には閲覧可能です。
@@ -28,12 +28,11 @@ React / TypeScript / Vite で作った 2 人用の相性診断 SPA。10 問 + �
 - Vitest, @testing-library/react, ESLint
 
 ## Project Structure
-- `src/pages`: Top / Quiz / Invite / Result / License ページ
+- `src/pages`: Top / Quiz / Invite / Result ページ
 - `src/components`: フォーム、結果ビュー、QR モーダル、ステータス表示などの UI パーツ
 - `src/domain`: 質問データとスコアリング（ソロ / ペア）、タイプバリアント定義
 - `src/p2p`・`src/hooks/useP2P.ts`: PeerJS ランチャーとメッセージ定義
 - `src/utils`: URL 圧縮・共有ヘルパーなど
-- `_script/check-licenses.mjs`: 依存ライセンスの簡易チェッカー（CI から呼び出し）
 
 ## Setup
 1. Node.js 18+ / npm 9+ を用意する
@@ -67,10 +66,10 @@ VITE_TURN_PASSWORD=pass
 
 ## Testing / QA
 - P2P の動作確認はブラウザで 2 タブ開き、`owner` と `guest` で同じ `sid` を使って接続してください
-- ライセンス更新は `npx license-checker --json > licenses.json` → `_script/check-licenses.mjs` → `THIRD-PARTY-LICENSES.md` の順で実施
+- ライセンス関連の自動生成と公開処理は現在停止中です
 
 ## License
-MIT License。依存ライブラリのライセンスは `THIRD-PARTY-LICENSES.md` を参照してください。
+MIT License。依存ライブラリ一覧の公開処理は一時停止中です。
 
 ## Docs
 - セットアップ: `SETUP.md`

@@ -41,5 +41,5 @@ npm run preview
 ---
 
 ## ℹ その他
-- ライセンス情報は CI（`license-check` ジョブ）で `THIRD-PARTY-LICENSES.md` に更新されます。公開前に最新化してください。
+- ライセンス関連の自動更新ジョブは一時停止中です。
 - 他ホスティング（Vercel / Netlify 等）でも静的配信でそのまま動作します。
