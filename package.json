@@ -12,7 +12,7 @@
     "test": "vitest run",
     "test:ci": "vitest run --silent",
     "preview": "vite preview",
-    "licenses:generate": "npm exec --package=@myooken/license-output -- third-party-license --license public/THIRD-PARTY-LICENSE.md && npm exec --package=@myooken/license-output -- third-party-license --review THIRD-PARTY-LICENSE-REVIEW.md"
+    "license:generate": "npm exec --package=@myooken/license-output -- third-party-license --license public/THIRD-PARTY-LICENSE.md && npm exec --package=@myooken/license-output -- third-party-license --review THIRD-PARTY-LICENSE-REVIEW.md"
   },
   "dependencies": {
     "lz-string": "^1.5.0",
